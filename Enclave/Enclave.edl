@@ -1,0 +1,16 @@
+enclave {
+    trusted {
+        /* define ECALLs here. */
+	public int get_sum(int a, int b);
+    	/* TODO 1, TODO 3, TODO 5: Add ecalls */
+
+	// random number generator function
+	unsigned int generate_random_number(void);
+    };
+
+    untrusted {
+        /* define OCALLs here. */
+        void ocall_print([in, string]const char* str);
+    	/* TODO 2: Add ocalls */
+    };
+};
