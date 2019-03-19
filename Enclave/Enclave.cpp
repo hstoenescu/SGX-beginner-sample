@@ -2,6 +2,7 @@
 #include "Enclave_t.h"
 #include <stdio.h>
 /* TODO: Add SGX trusted libraries headers if needed */ 
+#include "sgx_trts.h"
 
 #define SECRET_FILE "enclave_secret"
 
@@ -15,14 +16,24 @@ void printf(const char *fmt, ...)
     ocall_print(buf);
 }
 
+/* Simple functions - just to simply test intel sgx */
 int get_sum(int a, int b) {
 	ocall_print("Adding numbers inside enclave...");
 	return a + b;
 }
 
+
+int get_diff (int a, int b) {
+	ocall_print ("Diff between 2 numbers inside the enclave...");
+	return a-b;
+}
+
 // TODO 1: Generate a random unsigned int using a trusted library 
 unsigned int generate_random_number() {
-	return 10;	
+	int max_value = 42, min_value = 1;
+	unsigned int rand_nr;
+	sgx_read_rand((unsigned char *) &rand_nr, sizeof(unsigned int));
+	return rand_nr % (max_value + 1 - min_value) + min_value;
 }
 
 /* TODO 3: Sealing function 

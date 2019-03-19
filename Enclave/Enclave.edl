@@ -1,11 +1,17 @@
 enclave {
     trusted {
         /* define ECALLs here. */
+
+	// very simple function - adding 2 numbers
 	public int get_sum(int a, int b);
+
+	// testing other simple function
+	public int get_diff(int a, int b);
+
     	/* TODO 1, TODO 3, TODO 5: Add ecalls */
 
 	// random number generator function
-	unsigned int generate_random_number(void);
+	public unsigned int generate_random_number(void);
     };
 
     untrusted {

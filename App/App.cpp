@@ -31,24 +31,36 @@ int main(int argc, char const *argv[]) {
     }
 
     /* Call a simple method inside enclave */ 
+    /* for a list of error codes, see: 
+     * https://github.com/intel/linux-sgx/blob/master/common/inc/sgx_error.h 
+     */
     status = get_sum(global_eid, &sum_result, 3, 4);
     if (status != SGX_SUCCESS) {
         printf("ECall failed.\n");
         return 1;
     }
     printf("Sum from enclave: %d\n", sum_result);
-    /* TODO 1: Using an ECALL that generates a random unsigned int,
-    get a random number between 3 and 42. */ 
-   
-    // note: when printing a failure message, print also the the returned value for it!!!
-    unsigned int rand_number; 
-    status = generate_random_number(global_eid, &rand_number);
+
+    int diff_result;
+    status = get_diff(global_eid, &diff_result, 10, 5);
     if (status != SGX_SUCCESS) {
-	printf ("Ecall failed\n -> %x", status);
+	printf ("\nEcall failed for diff function - error %x", status);
 	return 1;
     }
-    printf ("The random value returned from the enclave is: %d\n", rand_number);
+    printf ("Diff from enclave: %d\n", diff_result);
 
+
+    /* TODO 1: Using an ECALL that generates a random unsigned int,
+    get a random number between 1 and 42. */ 
+    unsigned int rand_result;
+    status = generate_random_number(global_eid, &rand_result);
+    if (status != SGX_SUCCESS) {
+	printf ("\nEcall failed for random number generator - error %x\n", status);
+	return 1;
+    }
+    printf ("Random number from enclave: %d\n", rand_result);
+
+    // note: when printing a failure message, print also the the returned value for it!!
     /* TODO 3, TODO 4: Uncomment sealing/unsealing calls */ 
     /* seal_secret(global_eid); */
     /* unseal_secret(global_eid); */
