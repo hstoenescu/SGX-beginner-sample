@@ -9,3 +9,5 @@ For more information regarding the Intel SGX programming, please see the program
 
 Usage:
 - make SGX\_MODE=SIM (for simulation mode using sdk) or SGX\_MODE=HW (for using SGX in hardware mode)
+- run from the root folder the executable app: ./app
+- fell free to change code/add new one/test it
