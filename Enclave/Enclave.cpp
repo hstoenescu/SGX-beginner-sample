@@ -28,12 +28,21 @@ int get_diff (int a, int b) {
 	return a-b;
 }
 
-// TODO 1: Generate a random unsigned int using a trusted library 
+// Generate a random unsigned int using a trusted library 
 unsigned int generate_random_number() {
 	int max_value = 42, min_value = 1;
 	unsigned int rand_nr;
 	sgx_read_rand((unsigned char *) &rand_nr, sizeof(unsigned int));
 	return rand_nr % (max_value + 1 - min_value) + min_value;
+}
+
+void write_to_file() {
+	ocall_write_file ("test_file.txt", "horiahoria", 10);
+}
+
+void read_from_file() {
+	char *buf;
+	ocall_read_file("test_file.txt", buf, 5);
 }
 
 /* TODO 3: Sealing function 

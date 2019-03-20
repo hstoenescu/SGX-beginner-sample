@@ -12,12 +12,57 @@ void ocall_print(const char* str) {
     printf("%s\n", str);
 }
 
+// implement write to file
+// use fopen, fwrite
 void ocall_write_file(const char* filename, const char* buf, size_t buf_len) {
-    /* TODO 2: Implement write */
+    FILE *fp;
+
+    // write to file - filename the buf string with len = buf_len
+    fp = fopen(filename, "w+");
+    if (fp != NULL) {
+	int ret_val = fwrite(buf, sizeof(char), buf_len, fp);
+	if (ret_val != buf_len) {
+		printf ("Failed to write to file - returned value: %d\n", ret_val);
+		// not returning anything as we need to close the stream
+	}
+
+	int out_fclose = fclose(fp);
+	if (out_fclose != 0) {
+		printf ("Failed to close the file - %s\n", filename);
+		exit(0);
+	}
+    } else {
+	printf ("Failed to open the file - %s - for writing\n", filename);
+	exit(0);
+    }
 }
 
+// implement read from file
+// use fopen, fread
 void ocall_read_file(const char* filename, char* buf, size_t buf_len) {
-    /* TODO 2: Implement write */
+
+    int result;
+    FILE *fp;
+
+    fp = fopen(filename, "r");
+    if (fp != NULL) {
+	buf = (char*) malloc(sizeof(char)*int(buf_len));
+	if (buf == NULL) { printf ("Failed to allocate memory for buffer"); exit(1);}
+	
+	result = fread(buf, sizeof(char), buf_len, fp);
+	buf[buf_len] = '\0';
+	if (result != buf_len) {
+		printf ("Reading error from the file - %s\n", filename);
+	} else {
+		printf ("The first %d chars from the file %s: %s\n", int(buf_len), filename,buf);
+	}
+	fclose(fp);
+
+    } else {
+	printf ("Failed to open the file - %s - for reading\n", filename);
+    	exit(1);
+    }
+
 }
 
 int main(int argc, char const *argv[]) {
@@ -59,6 +104,22 @@ int main(int argc, char const *argv[]) {
 	return 1;
     }
     printf ("Random number from enclave: %d\n", rand_result);
+
+    /* Test the ecall to write something to a file - use the ocall implemented above */
+    status = write_to_file(global_eid);
+    if (status != SGX_SUCCESS) {
+	printf ("Ecall failed for writing something to file - error %x\n", status);
+	return 1;
+    }
+    printf ("Successfully wrote to file\n");
+
+    /* Test now the ecall to read the first 5 chars from the file - use the ocall from above */
+    status = read_from_file(global_eid);
+    if (status != SGX_SUCCESS) {
+	printf ("Ecall failed for reading the first 5 chars from the file - error %x\n", status);
+	return 1;
+    }
+    printf ("Successfully read from file\n");
 
     // note: when printing a failure message, print also the the returned value for it!!
     /* TODO 3, TODO 4: Uncomment sealing/unsealing calls */ 
