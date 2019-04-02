@@ -209,5 +209,6 @@ $(Signed_Enclave_Name): $(Enclave_Name)
 
 .PHONY: clean
 
+# added also cleaning for files creating by the app - test_file.txt, enclave_secret etc.
 clean:
-	@rm -f $(App_Name) $(Enclave_Name) $(Signed_Enclave_Name) $(App_Cpp_Objects) App/Enclave_u.* $(Enclave_Cpp_Objects) Enclave/Enclave_t.*
+	@rm -f $(App_Name) $(Enclave_Name) $(Signed_Enclave_Name) $(App_Cpp_Objects) App/Enclave_u.* $(Enclave_Cpp_Objects) Enclave/Enclave_t.* test_file.txt enclave_secret not_so_secret not_so_secret_string 

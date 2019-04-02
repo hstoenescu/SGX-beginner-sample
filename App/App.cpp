@@ -12,8 +12,7 @@ void ocall_print(const char* str) {
     printf("%s\n", str);
 }
 
-// implement write to file
-// use fopen, fwrite
+// implement write to file - use fopen, fwrite
 void ocall_write_file(const char* filename, const char* buf, size_t buf_len) {
     FILE *fp;
 
@@ -37,8 +36,7 @@ void ocall_write_file(const char* filename, const char* buf, size_t buf_len) {
     }
 }
 
-// implement read from file
-// use fopen, fread
+// implement read from fil - use fopen, fread
 void ocall_read_file(const char* filename, char* buf, size_t buf_len) {
 
     int result;
@@ -46,9 +44,6 @@ void ocall_read_file(const char* filename, char* buf, size_t buf_len) {
 
     fp = fopen(filename, "r");
     if (fp != NULL) {
-	buf = (char*) malloc(sizeof(char)*int(buf_len));
-	if (buf == NULL) { printf ("Failed to allocate memory for buffer"); exit(1);}
-	
 	result = fread(buf, sizeof(char), buf_len, fp);
 	buf[buf_len] = '\0';
 	if (result != buf_len) {
@@ -122,9 +117,11 @@ int main(int argc, char const *argv[]) {
     printf ("Successfully read from file\n");
 
     // note: when printing a failure message, print also the the returned value for it!!
-    /* TODO 3, TODO 4: Uncomment sealing/unsealing calls */ 
-    /* seal_secret(global_eid); */
-    /* unseal_secret(global_eid); */
+    seal_secret(global_eid);
+    unseal_secret(global_eid);
+
+    // seal a secret random value generated in the function also
+    //seal_secret_rand(global_eid);
 
     return 0;
 }

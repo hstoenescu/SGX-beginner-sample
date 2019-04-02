@@ -18,6 +18,11 @@ enclave {
     
 	// read from file
 	public void read_from_file(void);
+    
+	// seal and unseal secret
+	public void seal_secret();	
+	public void unseal_secret();
+	//public void seal_secret_rand();
     };
 
     untrusted {
@@ -28,6 +33,6 @@ enclave {
 	// define ocalls for write to file and read from file
 	void ocall_write_file([in, string] const char* filename, [in, size=buf_len] const char* buf, size_t buf_len);
 	void ocall_read_file([in, string] const char* filename, [in, size=buf_len] char* buf, size_t buf_len);
-	
     };
+
 };
