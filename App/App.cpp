@@ -90,7 +90,7 @@ int main(int argc, char const *argv[]) {
     printf ("Diff from enclave: %d\n", diff_result);
 
 
-    /* TODO 1: Using an ECALL that generates a random unsigned int,
+    /* Using an ECALL that generates a random unsigned int,
     get a random number between 1 and 42. */ 
     unsigned int rand_result;
     status = generate_random_number(global_eid, &rand_result);
@@ -116,11 +116,11 @@ int main(int argc, char const *argv[]) {
     }
     printf ("Successfully read from file\n");
 
-    // note: when printing a failure message, print also the the returned value for it!!
+    /* note: when printing a failure message, print also the the returned value for it for debugging */
     seal_secret(global_eid);
     unseal_secret(global_eid);
 
-    // seal a secret random value generated in the function also
+    /* seal a secret random value generated in the function also */
     //seal_secret_rand(global_eid);
 
     return 0;

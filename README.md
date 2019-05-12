@@ -5,8 +5,6 @@ The enclave implements general operations, like: add, diff, generate random numb
 
 Used for inspiration the sample code found on this lab: https://ocw.cs.pub.ro/courses/isc/labs/03
 
-For more information regarding the Intel SGX programming, please see the programming tutorial (Intel\_SGX\_programming\_tutorial.pdf - **TO BE ATTACHED**)
-
 **Usage:**  
 (1) git clone https://github.com/hstoenescu/SGX-beginner-sample  
 (2) cd SGX-beginner-sample  
