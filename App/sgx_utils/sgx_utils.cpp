@@ -12,8 +12,10 @@
 #endif
 
 /* Check error conditions for loading enclave */
+/* Print error in hex value for simpler debugging */
 void print_error_message(sgx_status_t ret) {
-    printf("SGX error code: %d\n", ret);
+    printf("SGX error code: %x\n", ret);
+	printf("See here the error codes in hex and messages: https://github.com/intel/linux-sgx/blob/master/common/inc/sgx_error.h");
 }
 
 /* Initialize the enclave:
